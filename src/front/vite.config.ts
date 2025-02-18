@@ -6,7 +6,8 @@ import { createHtmlPlugin } from 'vite-plugin-html'
 import { visualizer } from 'rollup-plugin-visualizer'
 import monacoEditorPlugin from 'vite-plugin-monaco-editor'
 
-const basePath = process.env.NODE_ENV !== 'production' || process.env.DISABLE_BASE_PATH === 'true' ? '/' : '/__km_base__/'
+//const basePath = process.env.NODE_ENV !== 'production' || process.env.DISABLE_BASE_PATH === 'true' ? '/' : '/__km_base__/'
+const basePath = '/'
 
 // https://vitejs.dev/config/
 export default defineConfig({
