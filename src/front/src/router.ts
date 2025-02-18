@@ -6,16 +6,63 @@ import { config } from 'config'
 import { useInfoStore } from './stores/info'
 
 const routes: Array<RouteRecordRaw> = [
+  {
+    name: 'portals',
+    path: '/portals',
+    component: () => import('@/pages/portals/portals.vue'),
+    meta: {
+      title: 'Portals',
+    },
+  },
+  {
+    name: 'vitals',
+    path: '/vitals',
+    component: () => import('@/pages/vitals/vitals.vue'),
+    meta: {
+      title: 'Vitals',
+    },
+  },
+  {
+    name: 'users',
+    path: '/users',
+    component: () => import('@/pages/users/users.vue'),
+    meta: {
+      title: 'Users',
+    },
+  },
+  {
+    name: 'where',
+    path: '/',
+    component: () => import('@/pages/index/index.vue'),
+    meta: {
+      title: 'Index',
+    },
+  },
+  {
+    name: 'login',
+    path: '/login',
+    component: () => import('@/pages/login/login.vue'),
+    meta: {
+      title: 'Login',
+    },
+  },
   // overview page
   {
     name: 'overview',
-    path: '/',
+    path: '/overview',
     component: () => import('@/pages/overview/Overview.vue'),
     meta: {
       title: 'Overview',
     },
   },
-
+  {
+    name: 'dashboard',
+    path: '/dashboard',
+    component: () => import('@/pages/dashboard/Dashboard.vue'),
+    meta: {
+      title: 'Dashboard',
+    },
+  },
   // not found page
   {
     name: 'not-found',
