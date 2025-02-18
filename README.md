@@ -5,7 +5,7 @@ Kong_gui based on https://github.com/Kong/kong-manager.git
 
 # needs
 1. node Version : v20.18.0
-2. JDK 18
+2. JDK 18 1
 
 # How to Use
 
