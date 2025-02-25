@@ -5,7 +5,10 @@
   "type": "module",
   "scripts": {
     "serve": "vite",
-    "build": "vite build",
+    "build": "pnpm cmd_1 && pnpm cmd_2 && pnpm cmd_3",
+    "cmd_1": "rmdir /s /q ..\\main\\resources\\static && mkdir ..\\main\\resources\\static",
+    "cmd_2": "vite build --logLevel silent",
+    "cmd_3": "xcopy /E /I dist\\* ..\\main\\resources\\static > nul 2>&1 && rmdir /s /q dist",
     "preview": "vite build && vite preview",
     "lint:style": "stylelint --allow-empty-input 'src/**/*.{css,scss,sass,less,styl,vue}'",
     "lint:vue": "vue-tsc --noEmit",

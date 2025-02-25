@@ -1,8 +1,18 @@
-<script>
-// 이전 페이지에 따라서 alert을 띄우든 말든
-if (localStorage.getItem('username') === null || localStorage.getItem('username') === '') {
-  window.location.href = '/login'
-} else {
-  window.location.href = '/overview'
+<template>
+</template>
+<script setup lang='ts'>
+import { useRouter } from 'vue-router'
+import { onMounted } from 'vue'
+const router = useRouter()
+
+const goPage = () => {
+  if (localStorage.getItem('username') === null || localStorage.getItem('username') === '') {
+    router.push('/login')
+  } else {
+    router.push('/overview')
+  }
 }
+onMounted(() => {
+  goPage()
+})
 </script>

@@ -43,14 +43,15 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { watch, computed, onMounted, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { AppLayout, type SidebarPrimaryItem } from '@kong-ui-public/app-layout'
 import { useInfoStore } from '@/stores/info'
 import NavbarLogo from '@/components/NavbarLogo.vue'
 
 const route = useRoute()
+const router = useRouter()
 const infoStore = useInfoStore()
 const { isHybridMode } = storeToRefs(infoStore)
 const username = ref('')
@@ -176,8 +177,17 @@ const sidebarItems2 = computed<Array<SidebarPrimaryItem>>(() => [
     active: route.name === 'dashboard',
   },
 ])
-onMounted(() => {
+
+const logout = () => {
+  localStorage.clear()
+  router.push('/')
+}
+
+watch(() => route.path, () => {
   username.value = localStorage.getItem('username') || 'Guest'
+})
+
+onMounted(() => {
 })
 </script>
 

@@ -18,14 +18,16 @@
 <!-- eslint-disable -->
 <script setup lang="ts">
 import { ref } from "vue"
+import { useRouter } from 'vue-router'
 
 const username = ref("");
 const password = ref("");
+const router = useRouter()
 
 const login = async () => {
 
   localStorage.setItem("username", username.value);
-  window.location.href = "/overview";
+  await router.push('/overview')
 };
 </script>
 
