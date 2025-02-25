@@ -22,7 +22,7 @@ Kong_gui based on https://github.com/Kong/kong-manager.git
 
 ## 1. Change Configuration
 1-1. src/main/resources/application.properties
-- PostgreSQL Info, port
+- PostgreSQL Info,ElasticSearch Info, port
 
 1-2. src/front/vite.config.ts
 - server.port
@@ -38,6 +38,6 @@ Kong_gui based on https://github.com/Kong/kong-manager.git
 - pnpm serve
 
 ### 2-2. Run Backend
-1. cd src/front
-2. pnpm build
-3. Run server
+- cd src/front
+- pnpm build
+- Run server
