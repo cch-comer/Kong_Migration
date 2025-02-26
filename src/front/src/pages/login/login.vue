@@ -15,20 +15,39 @@
   </div>
 </template>
 
-<!-- eslint-disable -->
 <script setup lang="ts">
-import { ref } from "vue"
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-const username = ref("");
-const password = ref("");
+const username = ref('')
+const password = ref('')
 const router = useRouter()
 
 const login = async () => {
+  try {
+    const response = await fetch('/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      credentials: 'include',
+      body: new URLSearchParams({
+        username: username.value,
+        password: password.value,
+      }),
+    })
 
-  localStorage.setItem("username", username.value);
-  await router.push('/overview')
-};
+    if (response.ok) {
+      localStorage.setItem('username', username.value)
+      await router.push('/')
+    } else {
+      const errorData = await response.json()
+      alert('Login failed : ' + errorData.error)
+    }
+  } catch (error) {
+    alert('Login error : ask Administrator')
+  }
+}
 </script>
 
 <style scoped lang="scss">

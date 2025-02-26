@@ -6,8 +6,8 @@ import { onMounted } from 'vue'
 const router = useRouter()
 
 const goPage = () => {
-  if (localStorage.getItem('username') === null || localStorage.getItem('username') === '') {
-    router.push('/login')
+  if ((localStorage.getItem('username') === null || localStorage.getItem('username') === '')) {
+    router.push('/loginPage')
   } else {
     router.push('/overview')
   }

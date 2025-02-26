@@ -39,11 +39,11 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
-    name: 'login',
-    path: '/login',
+    name: 'loginPage',
+    path: '/loginPage',
     component: () => import('@/pages/login/login.vue'),
     meta: {
-      title: 'Login',
+      title: 'LoginPage',
     },
   },
   // overview page

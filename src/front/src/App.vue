@@ -55,7 +55,7 @@ const router = useRouter()
 const infoStore = useInfoStore()
 const { isHybridMode } = storeToRefs(infoStore)
 const username = ref('')
-const hideComponents = computed(() => route.name === 'login' || route.name === 'where')
+const hideComponents = computed(() => route.name === 'loginPage' || route.name === 'where')
 const hideComponents2 = computed(() => route.name === 'overview' || route.name === 'portals' || route.name === 'vitals' || route.name === 'users')
 
 const sidebarItems = computed<Array<SidebarPrimaryItem>>(() => [
@@ -178,9 +178,26 @@ const sidebarItems2 = computed<Array<SidebarPrimaryItem>>(() => [
   },
 ])
 
-const logout = () => {
-  localStorage.clear()
-  router.push('/')
+const logout = async () => {
+  try {
+    const response = await fetch('/logout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      credentials: 'include',
+    })
+
+    if (response.ok) {
+      localStorage.clear()
+      await router.push('/')
+    } else {
+      alert('logout failed')
+    }
+
+  } catch (error) {
+    alert('logout failed')
+  }
 }
 
 watch(() => route.path, () => {
@@ -189,6 +206,7 @@ watch(() => route.path, () => {
 
 onMounted(() => {
 })
+
 </script>
 
 <style scoped lang="scss">
