@@ -1,5 +1,7 @@
 package com.kong.Kong.security;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -19,6 +21,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     private final DataSource dataSource;
 
+    private final Logger logger = LoggerFactory.getLogger(CustomAuthenticationProvider.class);
+
     public CustomAuthenticationProvider(DataSource dataSource) {
         this.dataSource = dataSource;
     }
@@ -37,6 +41,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         try{
             userDetails = jdbcDao.loadUserByUsername(username);
         } catch (UsernameNotFoundException e) {
+            logger.info(e.toString());
             throw new UsernameNotFoundException("Invalid username or password"); // username 정보가 없을때
         }
 
@@ -44,9 +49,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             if(new BCryptPasswordEncoder().matches(password, userDetails.getPassword())) {
                 return new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities()); // 성공
             } else {
+                logger.info("Invalid password to user : {}", username);
                 throw new BadCredentialsException("Invalid username or password"); // 비밀번호가 틀렸을 때
             }
         } else {
+            logger.info("disabled user : {}", username);
             throw new DisabledException("disabled user"); // 유저가 잠겼을 때
         }
 
