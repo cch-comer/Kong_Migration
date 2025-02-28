@@ -44,14 +44,16 @@
 
 <script setup lang="ts">
 import { watch, computed, onMounted, ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { AppLayout, type SidebarPrimaryItem } from '@kong-ui-public/app-layout'
 import { useInfoStore } from '@/stores/info'
 import NavbarLogo from '@/components/NavbarLogo.vue'
+import { Routes } from '@/utils/Routes.ts'
 
+
+const { goRoutes } = Routes()
 const route = useRoute()
-const router = useRouter()
 const infoStore = useInfoStore()
 const { isHybridMode } = storeToRefs(infoStore)
 const username = ref('')
@@ -190,7 +192,7 @@ const logout = async () => {
 
     if (response.ok) {
       localStorage.clear()
-      await router.push('/')
+      await goRoutes('where')
     } else {
       alert('logout failed')
     }

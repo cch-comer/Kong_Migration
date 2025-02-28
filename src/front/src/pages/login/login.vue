@@ -17,11 +17,11 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { Routes } from '@/utils/Routes'
 
 const username = ref('')
 const password = ref('')
-const router = useRouter()
+const { goRoutes } = Routes()
 
 const login = async () => {
   try {
@@ -39,7 +39,7 @@ const login = async () => {
 
     if (response.ok) {
       localStorage.setItem('username', username.value)
-      await router.push('/')
+      await goRoutes('where')
     } else {
       const errorData = await response.json()
       alert('Login failed : ' + errorData.error)

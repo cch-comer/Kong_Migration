@@ -46,7 +46,6 @@ const routes: Array<RouteRecordRaw> = [
       title: 'LoginPage',
     },
   },
-  // overview page
   {
     name: 'overview',
     path: '/overview',
@@ -63,7 +62,14 @@ const routes: Array<RouteRecordRaw> = [
       title: 'Dashboard',
     },
   },
-  // not found page
+  {
+    name: 'create-workspace',
+    path: '/workspace/create',
+    component: () => import('@/pages/workspace/CreateWorkspace.vue'),
+    meta: {
+      title: 'Create Workspace',
+    },
+  },
   {
     name: 'not-found',
     path: '/:pathMatch(.*)*',
@@ -72,8 +78,6 @@ const routes: Array<RouteRecordRaw> = [
       title: 'Not Found',
     },
   },
-
-  // service pages
   {
     name: 'service-list',
     path: '/services',
