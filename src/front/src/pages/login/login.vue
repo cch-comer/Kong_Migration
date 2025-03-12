@@ -36,10 +36,11 @@ const login = async () => {
         password: password.value,
       }),
     })
+    console.log(response)
 
     if (response.ok) {
       localStorage.setItem('username', username.value)
-      router.push({ name: 'where' })
+      await router.push({ name: 'where' })
     } else {
       const errorData = await response.json()
       alert('Login failed : ' + errorData.error)
