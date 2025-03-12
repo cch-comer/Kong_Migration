@@ -49,51 +49,55 @@ import { storeToRefs } from 'pinia'
 import { AppLayout, type SidebarPrimaryItem } from '@kong-ui-public/app-layout'
 import { useInfoStore } from '@/stores/info'
 import NavbarLogo from '@/components/NavbarLogo.vue'
-import { Routes } from '@/utils/Routes.ts'
+import axios from 'axios'
 
 
-const { goRoutes } = Routes()
 const route = useRoute()
 const infoStore = useInfoStore()
 const { isHybridMode } = storeToRefs(infoStore)
 const username = ref('')
 const hideComponents = computed(() => route.name === 'loginPage' || route.name === 'where')
-const hideComponents2 = computed(() => route.name === 'overview' || route.name === 'portals' || route.name === 'vitals' || route.name === 'users')
-
+const hideComponents2 = computed(() => route.name === 'overview' || route.name === 'portals' || route.name === 'vitals' || route.name === 'users' || route.name === 'create-workspace')
 const sidebarItems = computed<Array<SidebarPrimaryItem>>(() => [
   {
+    name: 'test',
+    to: { name: 'test', params: { wid: getWid() } },
+    key: 'test',
+    active: route.meta?.entity === 'test',
+  },
+  {
     name: 'Dashboard',
-    to: { name: 'dashboard' },
+    to: { name: 'dashboard', params: { wid: getWid() } },
     key: 'Dashboard',
     active: route.meta?.entity === 'dashboard',
   },
   {
     name: 'Gateway Services',
-    to: { name: 'service-list' },
+    to: { name: 'service-list', params: { wid: getWid() } },
     key: 'Gateway Services',
     active: route.meta?.entity === 'service',
   },
   {
     name: 'Routes',
-    to: { name: 'route-list' },
+    to: { name: 'route-list', params: { wid: getWid() } },
     key: 'Routes',
     active: route.meta?.entity === 'route',
   },
   {
     name: 'Consumers',
-    to: { name: 'consumer-list' },
+    to: { name: 'consumer-list', params: { wid: getWid() } },
     key: 'Consumers',
     active: route.meta?.entity === 'consumer',
   },
   {
     name: 'Plugins',
-    to: { name: 'plugin-list' },
+    to: { name: 'plugin-list', params: { wid: getWid() } },
     key: 'Plugins',
     active: route.meta?.entity === 'plugin',
   },
   {
     name: 'Upstreams',
-    to: { name: 'upstream-list' },
+    to: { name: 'upstream-list', params: { wid: getWid() } },
     key: 'Upstreams',
     active: route.meta?.entity === 'upstream',
   },
@@ -111,7 +115,7 @@ const sidebarItems = computed<Array<SidebarPrimaryItem>>(() => [
   },
   {
     name: 'SNIs',
-    to: { name: 'sni-list' },
+    to: { name: 'sni-list', params: { wid: getWid() } },
     key: 'SNIs',
     active: route.meta?.entity === 'sni',
   },
@@ -129,7 +133,7 @@ const sidebarItems = computed<Array<SidebarPrimaryItem>>(() => [
   },
   {
     name: 'Key Sets',
-    to: { name: 'key-set-list' },
+    to: { name: 'key-set-list', params: { wid: getWid() } },
     key: 'Key Sets',
     active: route.meta?.entity === 'key-set',
   },
@@ -172,33 +176,29 @@ const sidebarItems2 = computed<Array<SidebarPrimaryItem>>(() => [
     key: 'users',
     active: route.name === 'users',
   },
-  {
-    name: '화면 전환',
-    to: { name: 'dashboard' },
-    key: 'dashboard',
-    active: route.name === 'dashboard',
-  },
 ])
+
+function getWid() {
+  return localStorage.getItem('ws') ? localStorage.getItem('ws') : 'default'
+}
 
 const logout = async () => {
   try {
-    const response = await fetch('/logout', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      credentials: 'include',
+    const response = await axios.post('/api/logout', null, {
+      withCredentials: true,
     })
 
-    if (response.ok) {
+    if (response.status === 200) {
       localStorage.clear()
-      await goRoutes('where')
+      alert('logout success')
+      route.push({ name: 'where' })
     } else {
-      alert('logout failed')
+      localStorage.clear()
+      alert('session is expired')
     }
 
   } catch (error) {
-    alert('logout failed')
+    alert('logout error')
   }
 }
 

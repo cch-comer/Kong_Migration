@@ -1,5 +1,6 @@
 package com.kong.Kong.security;
 
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -17,15 +18,13 @@ import org.springframework.stereotype.Component;
 import javax.sql.DataSource;
 
 @Component
+@RequiredArgsConstructor
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     private final DataSource dataSource;
 
     private final Logger logger = LoggerFactory.getLogger(CustomAuthenticationProvider.class);
 
-    public CustomAuthenticationProvider(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {

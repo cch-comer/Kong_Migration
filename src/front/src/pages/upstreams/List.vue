@@ -41,19 +41,21 @@ const toaster = useToaster()
 const { t } = useI18n()
 const docsLink = useDocsLink(EntityType.Upstream)
 
+function getWid() {
+  return localStorage.getItem('ws') ? localStorage.getItem('ws') : 'default'
+}
+
 const createRoute = computed(() => {
-  return { name: 'upstream-create' }
+  return { name: 'upstream-create', params: { wid: getWid() } }
 })
 
 const getViewRoute = (id: string) => {
-  return { name: 'upstream-detail', params: { id } }
+  return { name: 'upstream-detail', params: { id, wid: getWid() } }
 }
 
 const getEditRoute = (id: string) => ({
   name: 'upstream-edit',
-  params: {
-    id,
-  },
+  params: { id, wid: getWid() },
 })
 
 const filterSchema: FilterSchema = {

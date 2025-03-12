@@ -1,7 +1,7 @@
 Kong_gui based on https://github.com/Kong/kong-manager.git
 
 # frontend: Vue.js
-# backend: Spring boot
+# backend: Spring boot 3.4.2
 
 ***
 
@@ -12,9 +12,10 @@ Kong_gui based on https://github.com/Kong/kong-manager.git
 ***
 
 ## Run once when cloned
-1. cd src/front
-2. npm install -g pnpm
-3. pnpm install
+1. open cmd
+2. cd src/front
+3. npm install -g pnpm
+4. pnpm install
 
 ***
 

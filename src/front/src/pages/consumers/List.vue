@@ -41,19 +41,21 @@ const toaster = useToaster()
 const { t } = useI18n()
 const docsLink = useDocsLink(EntityType.Consumer)
 
+function getWid() {
+  return localStorage.getItem('ws') ? localStorage.getItem('ws') : 'default'
+}
+
 const createRoute = computed(() => {
-  return { name: 'consumer-create' }
+  return { name: 'consumer-create', params: { wid: getWid() } }
 })
 
 const getViewRoute = (id: string) => {
-  return { name: 'consumer-detail', params: { id } }
+  return { name: 'consumer-detail', params: { id, wid: getWid() } }
 }
 
 const getEditRoute = (id: string) => ({
   name: 'consumer-edit',
-  params: {
-    id,
-  },
+  params: { id, wid: getWid() },
 })
 
 const filterSchema: FilterSchema = {

@@ -86,10 +86,10 @@
     </div>-->
 
     <div v-if="viewMode === 'grid'" class="workspaces-grid">
-      <div class="workspace-card">
+      <div v-for="workspace in props.data" :key="workspace.id" class="workspace-card" @click="goDetail(workspace.id, workspace.name)">
         <div class="workspace-header">
-          <div class="workspace-tag-grid" >DE</div>
-          <div class="workspace-name">names</div>
+          <div class="workspace-na-grid" :style="{backgroundColor: JSON.parse(workspace.meta.value).color}">{{ workspace.naData }}</div>
+          <div class="workspace-name">{{ workspace.name }}</div>
         </div>
         <div class="workspace-stats">
           <div class="stat-item">
@@ -102,16 +102,16 @@
         <div class="workspace-chart">
           <div class="workspace-no-data">
             <div class="workspace-no-data-text">
-              <p>No data available, Try using a longer timeframe</p>
+              <p>No data available, Try using a longer Timeframe</p>
             </div>
           </div>
         </div>
         <div class="workspace-footer">
           <div class="footer-stat">
-            <span>2</span> Consumers
+            <span>{{ workspace.consumercount }}</span> Consumers
           </div>
           <div class="footer-stat">
-            <span>17</span> Gateway Services
+            <span>{{ workspace.servicecount }}</span> Gateway Services
           </div>
         </div>
       </div>
@@ -130,17 +130,17 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-          <td style="text-align: center"><div class="workspace-tag-list">DE</div></td>
+        <tr v-for="workspace in props.data" :key="workspace.id" @click="testing(workspace.name)">
+          <td style="text-align: center"><div class="workspace-na-list" :style="{backgroundColor: JSON.parse(workspace.meta.value).color}">{{ workspace.naData }}</div></td>
           <td>
             <div class="workspace-info">
-              <span>names</span>
+              <span>{{ workspace.name }}</span>
             </div>
           </td>
-          <td>100</td>
+          <td>15478</td>
           <td>3%</td>
-          <td>consumers</td>
-          <td>workspace.gatewayServices</td>
+          <td>{{ workspace.consumercount }}</td>
+          <td>{{ workspace.servicecount }}</td>
         </tr>
         </tbody>
       </table>
@@ -153,10 +153,27 @@
 import { ref } from 'vue'
 import gridPath from '@/assets/grid.svg'
 import listPath from '@/assets/list.svg'
-const viewMode = ref('grid')
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
+const viewMode = ref('grid')
 const changeMode = (now) => {
   viewMode.value = now
+}
+
+const props = defineProps({
+  data: Array<Record<string, any>>,
+})
+
+function goDetail(wid, wname) {
+  const ws = localStorage.getItem('ws')
+  if (ws !== null && ws !== undefined) {
+    localStorage.removeItem('ws')
+    localStorage.removeItem('wsId')
+  }
+  localStorage.setItem('ws', wname)
+  localStorage.setItem('wsId', wid)
+  router.push({ name: 'dashboard', params: { wid: wname } })
 }
 
 </script>
@@ -237,23 +254,21 @@ const changeMode = (now) => {
   margin-bottom: 16px;
 }
 
-.workspace-tag-grid {
+.workspace-na-grid {
   padding: 2px 8px;
   border-radius: 4px;
   font-size: 12px;
   font-weight: 500;
   color: white;
-  background: #4284F4;
 }
 
-.workspace-tag-list {
+.workspace-na-list {
   padding: 2px 8px;
   border-radius: 4px;
   font-size: 12px;
   font-weight: 500;
   color: white;
-  background: #4284F4;
-  width: 50%;
+  width: 30%;
   display: inline-block;
   text-align: center;
 }

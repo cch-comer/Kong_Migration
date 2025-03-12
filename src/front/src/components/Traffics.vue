@@ -18,7 +18,7 @@
     <div class="traffic-chart">
       <div class="no-data">
         <div class="no-data-text">
-          <p>No data available, Try using a longer timeframe</p>
+          <p>No data available, Try using a longer Timeframe</p>
         </div>
       </div>
     </div>
@@ -39,7 +39,6 @@ const timeframeOptions = [
   { label: 'Last 12 Hours', value: '12h' },
 ]
 
-// 현재 선택된 timeframe
 const selectedTimeframe = ref(timeframeOptions[1].value)
 
 </script>

@@ -79,7 +79,7 @@ public class SecurityConfig {
                             }
                         })
                         .logoutSuccessUrl("/")
-                        .deleteCookies("SESSION")
+                        .deleteCookies("JSESSIONID")
                         .permitAll()
                 );
         return http.build();

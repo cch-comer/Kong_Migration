@@ -41,20 +41,21 @@ const toaster = useToaster()
 const { t } = useI18n()
 const docsLink = useDocsLink(EntityType.GatewayService)
 
+function getWid() {
+  return localStorage.getItem('ws') ? localStorage.getItem('ws') : 'default'
+}
+
 const createRoute = computed(() => {
-  return { name: 'service-create' }
+  return { name: 'service-create', params: { wid: getWid() } }
 })
 
 const getViewRoute = (id: string) => {
-  return { name: 'service-detail', params: { id } }
+  return { name: 'service-detail', params: { id, wid: getWid() } }
 }
 
 const getEditRoute = (id: string) => ({
   name: 'service-edit',
-  params: {
-    id,
-  },
-})
+  params: { id, wid: getWid() } })
 
 const filterSchema: FilterSchema = {
   name: {

@@ -1,0 +1,234 @@
+<template>
+  <div class="containers">
+    <div class="header">
+      <input
+        type="text"
+        placeholder="Filter by exact name or ID"
+        class="filter-input"
+      >
+      <button class="new-service-btn" @click="goRouterCreate('service')">
+        + New {{ createBtnName }}
+      </button>
+    </div>
+    <table class="service-table">
+      <thead>
+        <tr>
+          <th
+            v-for="col in tableColumns"
+            :key="col.id"
+          >
+            {{ col.name }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          v-for="data in tableData"
+          :key="data.id"
+          @click="goRouterDetail(data.id, to)"
+        >
+          <td>
+            <span v-if="data.name === null">-</span>
+            <strong v-else>{{ data.name }}</strong>
+          </td>
+          <td>
+            <span v-if="data.protocol === null">-</span>
+            <span v-else>{{ data.protocol }}</span>
+          </td>
+          <td>
+            <span v-if="data.host === null">-</span>
+            <span v-else>{{ data.host }}</span>
+          </td>
+          <td>
+            <span v-if="data.port === null">-</span>
+            <span v-else>{{ data.port }}</span>
+          </td>
+          <td>
+            <span v-if="data.path === null">-</span>
+            <span v-else>{{ data.path }}</span>
+          </td>
+          <td>
+            <label class="switch" @click.stop>
+              <input
+                type="checkbox"
+                v-model="data.enabled"
+                @change="changeEnabled(data.enabled)"
+              >
+              <span class="slider" />
+            </label>
+          </td>
+          <td>
+            <span v-if="data.tags === null">-</span>
+            <span
+              v-for="tag in data.tags"
+              :key="tag"
+              class="tag"
+            >{{ tag }}</span>
+          </td>
+          <td>{{ data.updated_at }}</td>
+          <td style="cursor: pointer" @click="changeEnabled(data.updated_at)">
+            ...
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<script setup>
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+defineProps({
+  tableColumns: Array,
+  tableData: Object,
+  createBtnName: String,
+  to: String,
+})
+
+function getWid() {
+  return localStorage.getItem('ws') ? localStorage.getItem('ws') : 'default'
+}
+
+const goRouterCreate = (to) => {
+  const route = {
+    name: to + '-create',
+    params: { wid: getWid() },
+  }
+  router.push(route)
+}
+
+const goRouterEdit = (id, to) => { // service 진짜 id
+  const route = {
+    name: to + '-edit',
+    params: { id, wid: getWid() },
+  }
+  router.push(route)
+}
+
+const goRouterDetail = (id, to) => {
+  const route = {
+    name: to + '-detail',
+    params: { id, wid: getWid() },
+  }
+  router.push(route)
+}
+
+const changeEnabled = (yn) => {
+  // yn = true / false
+}
+
+</script>
+
+<style scoped>
+.containers {
+  width: 100%;
+  margin: auto;
+  padding: 20px;
+  border: solid 1px #E0E4EA;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.filter-input {
+  flex: 1;
+  padding: 8px;
+  margin-right: 10px;
+  border: solid 1px #E0E4EA;
+  border-radius: 8px;
+}
+.new-service-btn {
+  background-color: #0044F4;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 18px;
+}
+.service-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.service-table th {
+  font-size: 14px;
+  font-weight: 600;
+  color: #6C7489;
+  padding: 10px;
+  text-align: left;
+}
+
+.service-table > tbody > tr {
+  cursor: pointer;
+}
+
+.service-table > tbody > tr:hover {
+  background-color: #EEFAFF;
+}
+
+.service-table td {
+  padding: 10px;
+  border-top: 1px solid #E0E4EA;
+  text-align: left;
+  font-size: 14px;
+}
+
+.tag {
+  display: inline-block;
+  background-color: #EEFAFF;
+  padding: 2px 5px;
+  margin: 2px;
+  border-radius: 3px;
+  color: #0063F7;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #0066ff;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+</style>

@@ -3,10 +3,10 @@
     <div class="overview">Overview</div>
     <div class="content">
       <div class="grid">
-        <InfoCard title="API Services" :value="11" />
-        <InfoCard title="API Consumers" :value="1" />
+        <InfoCard title="API Services" :value="props.service" />
+        <InfoCard title="API Consumers" :value="props.consumer" />
         <InfoCard title="API Requests" :value="36846" />
-        <InfoCard title="Workspace" :value="6" />
+        <InfoCard title="Workspace" :value="props.workspace" />
       </div>
     </div>
   </div>
@@ -14,6 +14,12 @@
 
 <script setup lang="ts">
 import InfoCard from '@/components/InfoCard.vue'
+
+const props = defineProps({
+  service: Number,
+  consumer: Number,
+  workspace: Number,
+})
 </script>
 
 <style lang="scss">

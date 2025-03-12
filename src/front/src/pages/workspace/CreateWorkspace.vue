@@ -42,9 +42,10 @@
 <script setup lang="ts">
 import { watch, ref } from 'vue'
 import SeparateLine from '@/components/SeparateLine.vue'
-import { Routes } from '@/utils/Routes'
+import axios from 'axios'
+import { useRouter } from 'vue-router'
 
-const { goRoutes } = Routes()
+const router = useRouter()
 const workspaceUpperName = ref('')
 const workspaceName = ref('')
 const selectedColor = ref('#3b82f6') // Default: Blue
@@ -56,7 +57,6 @@ watch(workspaceName, (value) => {
     const parts = value.split('-')
     workspaceUpperName.value = parts[0].charAt(0).toUpperCase() + parts[1].charAt(0).toUpperCase()
   } else {
-    // `-`가 없으면 그냥 앞 2문자를 대문자로 변환
     workspaceUpperName.value = value.slice(0, 2).toUpperCase()
   }
 })
@@ -66,11 +66,17 @@ const selectAvatar = (color) => {
 }
 
 const cancel = () => {
-  goRoutes('overview')
+  router.push({ name: 'overview' })
 }
 
-const createWorkspace = () => {
-  console.log('Creating workspace')
+const createWorkspace = async () => {
+  const response = await axios.post('/api/workspace/create', {
+    name: workspaceName.value,
+    color: selectedColor.value,
+  })
+  if (response.status === 200) {
+    await router.push({name: 'overview'})
+  }
 }
 </script>
 

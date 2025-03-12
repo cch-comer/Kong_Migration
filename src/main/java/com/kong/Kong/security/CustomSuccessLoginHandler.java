@@ -3,6 +3,7 @@ package com.kong.Kong.security;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
@@ -17,15 +18,13 @@ import java.time.Instant;
 
 @Component
 @Configuration
+@RequiredArgsConstructor
 public class CustomSuccessLoginHandler implements AuthenticationSuccessHandler {
 
     private final JdbcTemplate jdbcTemplate;
 
     private final Logger logger = LoggerFactory.getLogger(CustomSuccessLoginHandler.class);
 
-    public CustomSuccessLoginHandler(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
