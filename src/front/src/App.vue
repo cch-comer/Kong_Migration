@@ -187,14 +187,16 @@ const logout = async () => {
     const response = await axios.post('/api/logout', null, {
       withCredentials: true,
     })
+    console.log(response)
 
     if (response.status === 200) {
       localStorage.clear()
-      alert('logout success')
-      route.push({ name: 'where' })
+      // route.push({ name: 'where' })
+      window.location.reload()
     } else {
       localStorage.clear()
       alert('session is expired')
+      window.location.reload()
     }
 
   } catch (error) {
