@@ -1,15 +1,15 @@
 <template>
 </template>
-<script setup lang='ts'>
-import { useRouter } from 'vue-router'
+<script setup lang="ts">
 import { onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const goPage = () => {
-  if (localStorage.getItem('username') === null || localStorage.getItem('username') === '') {
-    router.push('/login')
+  if ((localStorage.getItem('username') === null || localStorage.getItem('username') === '')) {
+    router.push({ name: 'loginPage' })
   } else {
-    router.push('/overview')
+    router.push({ name: 'overview' })
   }
 }
 onMounted(() => {

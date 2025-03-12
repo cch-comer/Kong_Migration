@@ -45,6 +45,14 @@ export default defineConfig({
   ],
   server: {
     port: 8080,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8090',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+        secure: false,
+      },
+    },
   },
   css: {
     preprocessorOptions: {

@@ -80,8 +80,13 @@ const filterSchema: FilterSchema = {
   },
 }
 
+function getWid() {
+  return localStorage.getItem('ws') ? localStorage.getItem('ws') : 'default'
+}
+
 const createRoute = computed(() => {
   return {
+    params: { wid: getWid() },
     name: 'route-create',
     query: serviceId.value ? {
       serviceId: serviceId.value,
@@ -92,7 +97,7 @@ const createRoute = computed(() => {
 
 const getViewRoute = (id: string) => ({
   name: 'route-detail',
-  params: { id },
+  params: { id, wid: getWid() },
   query: {
     serviceId: serviceId.value,
     ...createRedirectRouteQuery(),
@@ -101,9 +106,7 @@ const getViewRoute = (id: string) => ({
 
 const getEditRoute = (id: string) => ({
   name: 'route-edit',
-  params: {
-    id,
-  },
+  params: { id, wid: getWid() },
   query: serviceId.value ? {
     serviceId: serviceId.value,
     ...createRedirectRouteQuery(),

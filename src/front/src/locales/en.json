@@ -72,6 +72,11 @@
     "feature.5": "Deploy an API Dev Portal with registration management"
   },
   "entities": {
+    "overview": {
+      "list.title": "Workspaces",
+      "description": "Workspace is a unit that independently separates and manages API configurations",
+      "create.form.title": "New Workspace"
+    },
     "service": {
       "description": "Gateway Service entities are abstractions of each of your own upstream services, e.g., a data transformation microservice, a billing API.",
       "created": "Gateway Service \"{name}\" successfully created!",

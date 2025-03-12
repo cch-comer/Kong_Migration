@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Properties>
+        <Property name="LOG_PATH">logs</Property>
+        <Property name="DEFAULT_PATTERN">[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%5p] --- %-40.40c{1.} (%L) : %m%n%xwEx</Property>
+        <Property name="COLOR_PATTERN">[%clr{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint}] [%clr{%5p}] %clr{---}{faint} %clr{%-40.40c}{cyan} %clr{(%L)}{yellow} %clr{:}{faint} %m%n%xwEx</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${COLOR_PATTERN}"/>
+        </Console>
+
+        <RollingFile name="RollingFileAppender">
+            <FileName>${LOG_PATH}/logs.log</FileName>
+            <FilePattern>${LOG_PATH}/logs.log.%d{yyyy-MM-dd}.gz</FilePattern>
+            <PatternLayout>
+                <Pattern>${DEFAULT_PATTERN}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+
+    </Appenders>
+
+
+    <Loggers>
+        <!-- Root : 일반적인 로그 정책, 반드시 하나 정의해야함 -->
+        <Root level="INFO" additivity="false">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="RollingFileAppender"/>
+        </Root>
+
+        <!-- springframework logger -->
+        <Logger name="org.springframework" level="INFO" additivity="false">
+            <AppenderRef ref="ConsoleAppender" />
+            <AppenderRef ref="RollingFileAppender"/>
+        </Logger>
+
+        <!-- jdbc logger -->
+        <Logger name="jdbc.sqlonly" level="OFF" additivity="false">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="RollingFileAppender"/>
+        </Logger>
+
+        <Logger name="jdbc.sqltiming" level="INFO" additivity="false">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="RollingFileAppender"/>
+        </Logger>
+
+        <Logger name="jdbc.resultsettable" level="INFO" additivity="false">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="RollingFileAppender"/>
+        </Logger>
+
+        <Logger name="jdbc.audit" level="OFF" additivity="false">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="RollingFileAppender"/>
+        </Logger>
+
+        <Logger name="jdbc.resultset" level="OFF" additivity="false">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="RollingFileAppender"/>
+        </Logger>
+
+        <Logger name="jdbc.connection" level="OFF" additivity="false">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="RollingFileAppender"/>
+        </Logger>
+    </Loggers>
+</Configuration>

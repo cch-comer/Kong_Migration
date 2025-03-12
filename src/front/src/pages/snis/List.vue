@@ -43,8 +43,12 @@ const toaster = useToaster()
 const { t } = useI18n()
 const docsLink = useDocsLink(EntityType.SNI)
 
+function getWid() {
+  return localStorage.getItem('ws') ? localStorage.getItem('ws') : 'default'
+}
+
 const createRoute = computed(() => {
-  return { name: 'sni-create' }
+  return { name: 'sni-create', params: { wid: getWid() } }
 })
 
 // stub: SNIs do not have detail pages
@@ -52,7 +56,7 @@ const getViewRoute = (_: string) => ({})
 
 const getEditRoute = (id: string) => ({
   name: 'sni-edit',
-  params: { id },
+  params: { id, wid: getWid() },
   query: createRedirectRouteQuery(),
 })
 

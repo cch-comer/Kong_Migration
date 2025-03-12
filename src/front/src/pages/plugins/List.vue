@@ -74,12 +74,14 @@ const createRoute = computed(() => {
   }
 })
 
+function getWid() {
+  return localStorage.getItem('ws') ? localStorage.getItem('ws') : 'default'
+}
+
 const getScopedEntityViewRoute = (type: ViewRouteType, id: string): RouteLocationRaw => {
   return {
     name: `${type}-detail`,
-    params: {
-      id,
-    },
+    params: { id, wid: getWid() },
   }
 }
 
@@ -89,6 +91,7 @@ const getViewRoute = (plugin: Pick<EntityRow, 'id' | 'name'>) => {
     params: {
       id: plugin.id,
       pluginType: plugin.name,
+      wid: getWid(),
     },
     query: {
       ...scopedQuery.value,
@@ -102,6 +105,7 @@ const getEditRoute = (plugin: EntityRow) => ({
   params: {
     id: plugin.id,
     pluginType: plugin.name,
+    wid: getWid(),
   },
   query: {
     ...scopedQuery.value,

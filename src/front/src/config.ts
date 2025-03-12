@@ -26,7 +26,7 @@ export const config = {
   },
 
   get ADMIN_API_IP() {
-    return getConfig<string>('ADMIN_API_URL', '192.168.132.146')
+    return getConfig<string>('ADMIN_API_URL', '192.168.132.148')
   },
 
   get ADMIN_API_PORT() {
